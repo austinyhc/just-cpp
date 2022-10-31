@@ -1,3 +1,5 @@
+TARGET = console
+
 CC = gcc
 CFLAGS = -O1 -g -Wall -Werror -I.
 
@@ -7,7 +9,7 @@ VECHO = @printf
 OBJS := console.o linenoise.o
 deps := $(OBJS:%.o=.%.o.d)
 
-a.out: $(OBJS)
+$(TARGET): $(OBJS)
 	$(VECHO) " LD\t$@\n"
 	$(Q)$(CC) $(LDFLAGS) -o $@ $^ -lm
 
@@ -17,7 +19,7 @@ a.out: $(OBJS)
 
 clean:
 	rm -f $(OBJS) $(deps) *~
-	rm -rf *.dSYM
+	rm -rf *.dSYM *.out $(TARGET)
 
 watch:
 	watchmedo shell-command --command "make test" --pattern="*.c;*.h" --recursive --drop

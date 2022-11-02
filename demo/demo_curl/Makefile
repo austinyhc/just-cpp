@@ -1,7 +1,7 @@
 TARGET = fetcher
 
 CC = gcc
-CFLAGS = -O1 -g -Wall -Werror -I.
+CFLAGS = -O0 -g -Wall -Werror -I.
 LIBS = -lcurl -lm -lcjson
 
 Q := @

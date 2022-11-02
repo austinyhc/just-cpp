@@ -46,7 +46,7 @@ static CURLcode http_get(CURL *handle, char const *url, response_t *resp)
 }
 
 static int get_title_slug(char const *json_string,
-        int const target_id, char *result)
+        int const target_id, char **result)
 {
 	cJSON *root = cJSON_Parse(json_string);
 
@@ -71,9 +71,8 @@ static int get_title_slug(char const *json_string,
         if (question_id == target_id) {
             char *title_slug_ = cJSON_GetObjectItem(stat, "question__title_slug")->valuestring;
             int len = strlen(title_slug_);
-            char *ptr = realloc(result, len+1);
-            result = ptr;
-            memcpy(result, title_slug_, len+1);
+            *result = (char *)malloc(sizeof(char) * (len+1));
+            memcpy(*result, title_slug_, len+1);
             cJSON_Delete(root);
             return len;
         }
@@ -96,8 +95,8 @@ int main(int argc, char* argv[])
     res = http_get(curl_handle, (char const *)URL, &resp);
     if (res != CURLE_OK) goto cleanup;
 
-    char *title_slug = malloc(0);
-    get_title_slug((char const*)resp.data, 20, title_slug);
+    char *title_slug = 0;
+    get_title_slug((char const*)resp.data, 20, &title_slug);
     printf("%s\n", title_slug);
 
     /* curl_easy_reset(curl_handle); */

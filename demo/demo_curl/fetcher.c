@@ -11,7 +11,7 @@ typedef struct response {
     size_t size;
 } response_t;
 
-size_t write_callback(void *buffer, size_t size, size_t nmemb, void *userp)
+static size_t write_callback(void *buffer, size_t size, size_t nmemb, void *userp)
 {
     size_t realsize = size * nmemb;
     response_t *response = (response_t*) userp;
@@ -29,7 +29,7 @@ size_t write_callback(void *buffer, size_t size, size_t nmemb, void *userp)
     return realsize;
 }
 
-CURLcode http_get(CURL *handle, char const *url, response_t *resp)
+static CURLcode http_get(CURL *handle, char const *url, response_t *resp)
 {
     CURLcode res;
 
@@ -39,15 +39,14 @@ CURLcode http_get(CURL *handle, char const *url, response_t *resp)
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, resp);
 
     res = curl_easy_perform(handle);
-    if (!res)
+    if (res != CURLE_OK)
         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 
     return res;
 }
 
-#define OKAY 1
-static int get_title_slug(char const* json_string,
-        int const target_id, char* result)
+static int get_title_slug(char const *json_string,
+        int const target_id, char *result)
 {
 	cJSON *root = cJSON_Parse(json_string);
 
@@ -66,21 +65,26 @@ static int get_title_slug(char const* json_string,
     }
 
     cJSON_ArrayForEach (pair, pairs) {
-	    cJSON *stat  = cJSON_GetObjectItem(pair, "stat");
+	    cJSON *stat = cJSON_GetObjectItem(pair, "stat");
         int question_id = cJSON_GetObjectItem(stat, "question_id")->valueint;
 
         if (question_id == target_id) {
-            result = cJSON_GetObjectItem(stat, "question__title_slug")->valuestring;
-            break;
+            char *title_slug_ = cJSON_GetObjectItem(stat, "question__title_slug")->valuestring;
+            int len = strlen(title_slug_);
+            char *ptr = realloc(result, len+1);
+            result = ptr;
+            memcpy(result, title_slug_, len+1);
+            cJSON_Delete(root);
+            return len;
         }
     }
 
     cJSON_Delete(root);
-    return OKAY;
+    return 0;
 }
 
 
-int main(void)
+int main(int argc, char* argv[])
 {
     CURL *curl_handle;
     CURLcode res;
@@ -90,10 +94,10 @@ int main(void)
     if (!curl_handle) {}
 
     res = http_get(curl_handle, (char const *)URL, &resp);
-    if (!res) goto cleanup;
+    if (res != CURLE_OK) goto cleanup;
 
-    char* title_slug = 0;
-    res = get_title_slug((char const*)resp.data, 20, title_slug);
+    char *title_slug = malloc(0);
+    get_title_slug((char const*)resp.data, 20, title_slug);
     printf("%s\n", title_slug);
 
     /* curl_easy_reset(curl_handle); */

@@ -22,8 +22,8 @@ static size_t write_callback(void *buffer, size_t size, size_t nmemb, void *user
 
     response->data = ptr;
     memcpy(&(response->data[response->size]), buffer, realsize);
-    response->size = realsize;
-    response->data[response->size] = '\0';
+    response->size += realsize;
+    response->data[response->size] = 0;
     return realsize;
 }
 

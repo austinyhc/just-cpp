@@ -2,15 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
+#include <cjson/cJSON.h>
 
-char* URL = "https://leetcode.com/api/problems/algorithms/";
+char *URL = "https://leetcode.com/api/problems/algorithms/";
 
 typedef struct response {
     char *data;
     size_t size;
 } response_t;
 
-static size_t write_callback(void *buffer, size_t size, size_t nmemb, void *userp)
+size_t write_callback(void *buffer, size_t size, size_t nmemb, void *userp)
 {
     size_t realsize = size * nmemb;
     response_t *response = (response_t*) userp;
@@ -24,34 +25,83 @@ static size_t write_callback(void *buffer, size_t size, size_t nmemb, void *user
     memcpy(&(response->data[response->size]), buffer, realsize);
     response->size += realsize;
     response->data[response->size] = 0;
+
     return realsize;
 }
 
-int main(void)
+CURLcode http_get(CURL *handle, char const *url, response_t *resp)
 {
-    CURL *curl;
     CURLcode res;
 
-    curl = curl_easy_init();
+    curl_easy_setopt(handle, CURLOPT_URL, url);
+    curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, 1L);
+    curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_callback);
+    curl_easy_setopt(handle, CURLOPT_WRITEDATA, resp);
 
-    if (curl) {
-        response_t resp = { .data = malloc(0), .size = 0 };
+    res = curl_easy_perform(handle);
+    if (!res)
+        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 
-        curl_easy_setopt(curl, CURLOPT_URL, URL);
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+    return res;
+}
 
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &resp);
+#define OKAY 1
+static int get_title_slug(char const* json_string,
+        int const target_id, char* result)
+{
+	cJSON *root = cJSON_Parse(json_string);
 
-        res = curl_easy_perform(curl);
+	cJSON *pairs = 0;
+	cJSON *pair  = 0;
 
-        if (res != CURLE_OK)
-            fprintf(stderr, "curl_easy_perform() failed: %s\n",
-                    curl_easy_strerror(res));
-
-        printf("%ld\n", resp.size);
-
-        curl_easy_cleanup(curl);
+	pairs = cJSON_GetObjectItem(root, "stat_status_pairs");
+    // FIXME: This is not thread safe try to use `cJSON ParseWithOpts`
+    // with `return_parse_end` instead.
+    if (!pairs) {
+        const char *error_ptr = cJSON_GetErrorPtr();
+        if (error_ptr)
+            fprintf(stderr, "cJSON_Parse() failed: %s\n", error_ptr);
+        cJSON_Delete(root);
+        return 0;
     }
+
+    cJSON_ArrayForEach (pair, pairs) {
+	    cJSON *stat  = cJSON_GetObjectItem(pair, "stat");
+        int question_id = cJSON_GetObjectItem(stat, "question_id")->valueint;
+
+        if (question_id == target_id) {
+            result = cJSON_GetObjectItem(stat, "question__title_slug")->valuestring;
+            break;
+        }
+    }
+
+    cJSON_Delete(root);
+    return OKAY;
+}
+
+
+int main(void)
+{
+    CURL *curl_handle;
+    CURLcode res;
+    response_t resp = { .data = malloc(0), .size = 0 };
+
+    curl_handle = curl_easy_init();
+    if (!curl_handle) {}
+
+    res = http_get(curl_handle, (char const *)URL, &resp);
+    if (!res) goto cleanup;
+
+    char* title_slug = 0;
+    res = get_title_slug((char const*)resp.data, 20, title_slug);
+    printf("%s\n", title_slug);
+
+    /* curl_easy_reset(curl_handle); */
+    /* http_post(curl_handle) */
+
+cleanup:
+    curl_easy_cleanup(curl_handle);
+    curl_global_cleanup();
+
     return 0;
 }

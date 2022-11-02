@@ -2,7 +2,7 @@ TARGET = fetcher
 
 CC = gcc
 CFLAGS = -O1 -g -Wall -Werror -I.
-LIBS = -lcurl -lm
+LIBS = -lcurl -lm -lcjson
 
 Q := @
 VECHO = @printf

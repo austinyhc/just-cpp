@@ -17,11 +17,12 @@ CFLAGS = -I./include
 CFLAGS += -std=c99 -pedantic -Wall -Wextra -Werror
 
 TESTS = \
-	0001_two_sum
+	0001_two_sum \
+	0136_single_number
 
 TESTS := $(addprefix tests/,$(TESTS))
 
-# string substitutio)
+# string substitution)
 # As an example, ./tests/0001_two_sum.c turns into ./tests/0001_two_sum.o.d
 deps := $(TESTS:%=%.o.d)
 

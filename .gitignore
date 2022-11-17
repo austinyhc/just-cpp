@@ -1,3 +1,6 @@
+# Test artifacts
+*.ok
+
 # Prerequisites
 *.d
 

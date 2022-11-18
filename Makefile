@@ -18,6 +18,7 @@ CFLAGS += -std=c99 -pedantic -Wall -Wextra -Werror
 
 TESTS = \
 	0001_two_sum \
+	0020_valid_parentheses \
 	0136_single_number
 
 TESTS := $(addprefix tests/,$(TESTS))

@@ -1,5 +1,5 @@
-#ifndef AUSTINCHN_TWO_SUM_H
-#define AUSTINCHN_TWO_SUM_H
+
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,5 +29,3 @@ int* solution(int* nums, int numsSize, int target, int* returnSize)
 #ifdef __cplusplus
 }
 #endif
-
-#endif // AUSTINCHN_TWO_SUM_H

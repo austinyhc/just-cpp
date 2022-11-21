@@ -1,3 +1,9 @@
+#pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int singleNumber(int *nums, int numSize)
 {
     if (numSize == 1) return nums[numSize-1];
@@ -8,3 +14,7 @@ int singleNumber(int *nums, int numSize)
 
     return result;
 }
+
+#ifdef __cplusplus
+}
+#endif

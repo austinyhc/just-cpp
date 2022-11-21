@@ -1,5 +1,5 @@
-#ifndef AUSTINCHN_VALID_PAREN_H
-#define AUSTINCHN_VALID_PAREN_H
+
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,5 +33,3 @@ bool isValid(char *s) {
 #ifdef __cplusplus
 }
 #endif
-
-#endif // AUSTINCHN_VALID_PAREN_H

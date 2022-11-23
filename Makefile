@@ -17,10 +17,10 @@ CFLAGS = -I./include
 CFLAGS += -std=c99 -pedantic -Wall -Wextra -Werror
 
 TESTS = \
+	test_xor_trick \
 	test_util \
 	0001_two_sum \
-	0020_valid_parentheses \
-	0136_single_number
+	0020_valid_parentheses
 
 TESTS := $(addprefix tests/,$(TESTS))
 

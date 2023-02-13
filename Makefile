@@ -12,8 +12,8 @@ else
 	VECHO = @$(PRINTF)
 endif
 
-CFLAGS = -I./include
-CFLAGS += -std=c99 -pedantic -Wall -Wextra -Werror
+CFLAGS = -I./include -I./deps/uthash -I./deps/assertion-macros
+CFLAGS += -std=c99 -pedantic -Wall -Wextra -Werror -g
 
 TESTS = \
 	0001_two_sum \

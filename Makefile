@@ -18,7 +18,8 @@ CFLAGS += -std=c99 -pedantic -Wall -Wextra -Werror
 TESTS = \
 	0001_two_sum \
 	0020_valid_parentheses \
-	t0000_xor
+	t00_xor \
+	ctci_ch01
 
 TESTS := $(addprefix tests/test_,$(TESTS))
 DEPS  := $(TESTS:%=%.d)

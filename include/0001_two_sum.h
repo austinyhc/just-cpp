@@ -1,33 +1,45 @@
 
 #pragma once
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <uthash.h>
+
+typedef struct {
+	int key, index;
+	UT_hash_handle hh;
+} HashElement;
 
 int* two_sum(int* nums, int numsSize, int target, int* returnSize)
 {
+    HashElement *hash = NULL, *elem;
+
     *returnSize = 2;
-    int *res = calloc(*returnSize, sizeof(int));
+    int *result = (int*) calloc(*returnSize, sizeof(int));
+
+    if (!numsSize || !nums) return result;
 
     for (int i = 0; i < numsSize; i++) {
-        int x = target - nums[i];
-        for (int j = i+1; j<numsSize; j++) {
-            if (x == nums[j]) {
-                res[0] = i;
-                res[1] = j;
-                return res;
-            }
+
+        int to_find = target - nums[i];
+
+        HASH_FIND_INT(hash, &to_find, elem);
+        if (elem) {
+            result[0] = elem->index;
+            result[1] = i;
+            return result;
         }
+
+        elem = malloc(sizeof(HashElement));
+        elem->key = nums[i];
+        elem->index = i;
+        HASH_ADD_INT(hash, key, elem);
     }
 
     *returnSize = 0;
+
+    HashElement* tmp;
+    HASH_ITER(hh, hash, elem, tmp) { free(elem); }
     return 0;
 }
-
-#ifdef __cplusplus
-}
-#endif

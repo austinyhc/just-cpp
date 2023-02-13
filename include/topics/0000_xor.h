@@ -1,4 +1,3 @@
-
 #pragma once
 
 #ifdef __cplusplus
@@ -9,7 +8,7 @@ extern "C" {
 #include <stdlib.h>
 #include <stdio.h>
 
-int findOneMissingValue(int* nums, int numsSize)
+int find_one_missing_value(int* nums, int numsSize)
 {
     int result = 0;
     for (int i = 1; i <= numsSize+1; ++i) {
@@ -22,7 +21,7 @@ int findOneMissingValue(int* nums, int numsSize)
     return result;
 }
 
-int findOneDuplicateValue(int* nums, int numsSize)
+int find_one_dup_value(int* nums, int numsSize)
 {
     int result = 0;
     for (int i = 1; i < numsSize; ++i) {
@@ -34,7 +33,7 @@ int findOneDuplicateValue(int* nums, int numsSize)
     return result;
 }
 
-void findTwoMissingValues(int* nums, int numsSize, int* res)
+void find_two_missing_values(int* nums, int numsSize, int* res)
 {
     int result = 0;
     for (int i = 1; i <= numsSize+2; ++i) {

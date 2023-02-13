@@ -8,10 +8,10 @@ extern "C" {
 #include <stddef.h>
 #include <stdlib.h>
 
-
-int* solution(int* nums, int numsSize, int target, int* returnSize)
+int* two_sum(int* nums, int numsSize, int target, int* returnSize)
 {
-    int *res = calloc((*returnSize=2), sizeof(int));
+    *returnSize = 2;
+    int *res = calloc(*returnSize, sizeof(int));
 
     for (int i = 0; i < numsSize; i++) {
         int x = target - nums[i];
@@ -23,6 +23,8 @@ int* solution(int* nums, int numsSize, int target, int* returnSize)
             }
         }
     }
+
+    *returnSize = 0;
     return 0;
 }
 

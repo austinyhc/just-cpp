@@ -1,5 +1,4 @@
-# .PHONY all check clean
-# all: check
+# @author Austin Chen
 
 PRINTF = env printf
 PASS_COLOR = \e[32;01m
@@ -17,38 +16,39 @@ CFLAGS = -I./include
 CFLAGS += -std=c99 -pedantic -Wall -Wextra -Werror
 
 TESTS = \
-	test_xor_trick \
-	test_util \
 	0001_two_sum \
-	0020_valid_parentheses
+	0020_valid_parentheses \
+	t0000_xor
 
-TESTS := $(addprefix tests/,$(TESTS))
-
-# string substitution)
-# As an example, ./tests/0001_two_sum.c turns into ./tests/0001_two_sum.o.d
-deps := $(TESTS:%=%.o.d)
-
-TESTS_OK = $(TESTS:=.ok)
+TESTS := $(addprefix tests/test_,$(TESTS))
+DEPS  := $(TESTS:%=%.d)
+TESTS_OK := $(TESTS:=.ok)
 
 check: $(TESTS_OK)
 
 $(TESTS_OK): %.ok: %
-	$(Q)$(PRINTF) "*** Validating $< ***\n"
-	$(Q)./$< && $(PRINTF) "\t$(PASS_COLOR)[ Verified  ]$(NO_COLOR)\n"
-	@touch $@
+	$(Q)$(PRINTF) "*** Validating build/tests/$(<F) ***\n"
+	$(Q)./build/tests/$(<F) && $(PRINTF) "\t$(PASS_COLOR)[ Verified  ]$(NO_COLOR)\n"
+	@mkdir -p build/ok
+	@touch build/ok/$(@F)
 
 # standard build rules
 .SUFFIXES: .o .c
 .c.o:
 	$(VECHO) "  CC\t$@\n"
-	$(Q)$(CC) -o $@ $(CFLAGS) -c -MMD -MF $@.d $<
+	@mkdir -p build/objs
+	$(Q)$(CC) -o build/objs/$(@F) $(CFLAGS) -c -MMD -MF build/objs/$(@F).d $<
 
 $(TESTS): %: %.o
 	$(VECHO) "  LD\t$@\n"
-	$(Q)$(CC) -o $@ $^ $(LDFLAGS)
+	@mkdir -p build/tests
+	$(Q)$(CC) -o build/tests/$(@F) build/objs/$(^F) $(LDFLAGS)
 
 clean:
 	$(VECHO) "  Cleaning...\n"
-	$(Q)$(RM) $(TESTS) $(TESTS_OK) $(TESTS:=.o) $(deps)
+	rm -rf build
+	$(Q)$(RM) $(TESTS) $(TESTS_OK) $(TESTS:=.o) $(DEPS)
 
--include $(deps)
+-include $(DEPS)
+
+.PHONY: all check clean

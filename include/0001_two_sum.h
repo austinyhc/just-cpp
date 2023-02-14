@@ -7,8 +7,8 @@
 #include <uthash.h>
 
 typedef struct {
-	int key, index;
-	UT_hash_handle hh;
+    int key, index;
+    UT_hash_handle hh;
 } HashElement;
 
 int* two_sum(int* nums, int numsSize, int target, int* returnSize)

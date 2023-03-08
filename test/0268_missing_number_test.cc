@@ -1,4 +1,4 @@
-#include "0268_missing-number.h"
+#include "0268_missing_number.h"
 
 TEST(S, Demo) {
     Solution s;

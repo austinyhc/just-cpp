@@ -1,4 +1,4 @@
-#include "0001_two-sum.h"
+#include "0001_two_sum.h"
 
 TEST(S, Demo) {
     Solution s;

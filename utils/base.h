@@ -15,7 +15,7 @@
 
 #include "absl/strings/str_split.h"
 #include "absl/strings/string_view.h"
-// #include "benchmark/benchmark.h"
+#include "benchmark/benchmark.h"
 #include "gtest/gtest.h"
 
 using namespace std;

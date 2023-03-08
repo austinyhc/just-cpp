@@ -20,9 +20,6 @@ export_file = rule(
 def leetlib_deps():
     native.cc_library(
         name = "base",
-        srcs = [
-            "utils/base.cc",
-        ],
         visibility = ["//visibility:public"],
         strip_include_prefix = "utils",
         hdrs = [

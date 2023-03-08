@@ -1,14 +1,20 @@
+#include <unordered_map>
 #include "utils/base.h"
 
 class Solution {
 public:
-    int missingNumber(const vector<int>& nums) {
-        int n = nums.size();
-        int ret = 0;
+    int findDuplicate(const vector<int>& nums) {
 
-        for (int i = 0; i <= n; ++i) { ret ^= i; };
-        for (int const& num : nums) { ret ^= num; }
+        unordered_map<int,int> dict;
 
-        return ret;
+        for (int const& num : nums) {
+            if (dict.count(num)) dict[num]++;
+            else dict.insert({num, 1});
+        }
+
+        for (auto& kv : dict) {
+            if (kv.second > 1) return kv.first;
+        }
+        return -1;
     }
 };

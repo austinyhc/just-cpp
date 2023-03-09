@@ -79,18 +79,20 @@ struct BiDirListNode {
 
 template <class T>
 class TreeNode {
- public:
-  T val;
-  TreeNode* left;
-  TreeNode* right;
-  TreeNode* next;
+public:
+    T val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode* next;
 
-  TreeNode() : val(0), left(nullptr), right(nullptr), next(nullptr) {}
+    TreeNode() :
+        val(0), left(nullptr), right(nullptr), next(nullptr) {}
 
-  TreeNode(T x) : val(x), left(nullptr), right(nullptr), next(nullptr) {}
+    TreeNode(T x) :
+        val(x), left(nullptr), right(nullptr), next(nullptr) {}
 
-  TreeNode(T x, TreeNode* left, TreeNode* right)
-      : val(x), left(left), right(right) {}
+    TreeNode(T x, TreeNode* left, TreeNode* right) :
+        val(x), left(left), right(right) {}
 };
 
 template <class T>
@@ -146,8 +148,25 @@ TreeNode<T>* TreeNodeFactory(const std::string& input) {
 
 template <class T>
 vector<T> DumpTree(TreeNode<T>* t) {
+
     if (!t) return vector<T>();
-    // vector<T*>
+
+    queue<TreeNode<T>*> fifo;
+    fifo.push(t);
+
+    vector<T> ret({});
+
+    while (!fifo.empty()) {
+
+        TreeNode<T>* node = fifo.front();
+
+        ret.push_back(node->val);
+        fifo.pop();
+
+        if (node->left) { fifo.push(node->left); }
+        if (node->right) { fifo.push(node->right); }
+    }
+    return ret;
 }
 
 template <typename T>
@@ -166,7 +185,6 @@ void DumpVector(vector<T> v) {
     cout << v;
 }
 
-// TODO 应该怎么派生TreeNode的类，才能使用上边的工厂函数？
 template ostream& operator<<<int>(ostream& os, const vector<int>& v);
 template ostream& operator<<<vector<int>>(ostream& os, const vector<vector<int>>& v);
 

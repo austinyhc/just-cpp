@@ -10,25 +10,23 @@
 namespace leetlib {
 
 template<typename T>
-class TreeNode {
-public:
+struct TreeNode {
     T val;
     TreeNode* left;
     TreeNode* right;
     TreeNode* next;
 
-    TreeNode() :
-        val(0), left(nullptr), right(nullptr), next(nullptr) {}
+    TreeNode() : val(0), left(nullptr), right(nullptr), next(nullptr) {}
+    TreeNode(T x) : val(x), left(nullptr), right(nullptr), next(nullptr) {}
+    TreeNode(T x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 
-    TreeNode(T x) :
-        val(x), left(nullptr), right(nullptr), next(nullptr) {}
+    static TreeNode<T>* Factory(const std::string& input);
+    static std::vector<T> DumpTree(TreeNode<T>* t);
 
-    TreeNode(T x, TreeNode* left, TreeNode* right) :
-        val(x), left(left), right(right) {}
 };
 
 template<typename T>
-TreeNode<T>* TreeNodeFactory(const std::string& input) {
+TreeNode<T>* TreeNode<T>::Factory(const std::string& input) {
 
     absl::string_view list_str(input);
     std::vector<TreeNode<T>*> level_traversal;
@@ -79,7 +77,7 @@ TreeNode<T>* TreeNodeFactory(const std::string& input) {
 }
 
 template<typename T>
-std::vector<T> DumpTree(TreeNode<T>* t) {
+std::vector<T> TreeNode<T>::DumpTree(TreeNode<T>* t) {
 
     if (!t) return std::vector<T>();
 

@@ -13,44 +13,51 @@ struct ListNode {
     ListNode() : next(NULL) {}
     ListNode(T x) : val(x), next(NULL) {}
 
-    static ListNode* Factory(const std::initializer_list<T> l) {
-        if (l.size() == 0) return nullptr;
-        auto iter = l.begin();
-        ListNode* cur = new ListNode(*iter);
-        ListNode* ret = cur;
-        ++iter;
-        while (iter != l.end()) {
-            cur->next = new ListNode(*iter);
-            cur = cur->next;
-            ++iter;
-        }
-        return ret;
-    }
+    static ListNode* Factory(const std::initializer_list<T> l);
+    static ListNode* Factory(const std::vector<T> l);
+    static std::vector<T> Dump(ListNode* head);
 
-    static ListNode* Factory(const std::vector<T> l) {
-        if (l.size() == 0) return nullptr;
-        auto iter = l.begin();
-        ListNode* cur = new ListNode(*iter);
-        ListNode* ret = cur;
-        ++iter;
-        while (iter != l.end()) {
-            cur->next = new ListNode(*iter);
-            cur = cur->next;
-            ++iter;
-        }
-        return ret;
-    }
-
-    static std::vector<T> Dump(ListNode* head) {
-        std::vector<T> ret;
-        while (head) {
-            ret.push_back(head->val);
-            head = head->next;
-        }
-
-        return ret;
-    }
 };
+
+template <typename T>
+ListNode<T>* ListNode<T>::Factory(const std::initializer_list<T> l) {
+    if (l.size() == 0) return nullptr;
+    auto iter = l.begin();
+    ListNode* cur = new ListNode(*iter);
+    ListNode* ret = cur;
+    ++iter;
+    while (iter != l.end()) {
+        cur->next = new ListNode(*iter);
+        cur = cur->next;
+        ++iter;
+    }
+    return ret;
+}
+
+template <typename T>
+ListNode<T>* ListNode<T>::Factory(const std::vector<T> l) {
+    if (l.size() == 0) return nullptr;
+    auto iter = l.begin();
+    ListNode* cur = new ListNode(*iter);
+    ListNode* ret = cur;
+    ++iter;
+    while (iter != l.end()) {
+        cur->next = new ListNode(*iter);
+        cur = cur->next;
+        ++iter;
+    }
+    return ret;
+}
+
+template <typename T>
+std::vector<T> ListNode<T>::Dump(ListNode* head) {
+    std::vector<T> ret;
+    while (head) {
+        ret.push_back(head->val);
+        head = head->next;
+    }
+    return ret;
+}
 
 template<typename T>
 struct BiDirListNode {

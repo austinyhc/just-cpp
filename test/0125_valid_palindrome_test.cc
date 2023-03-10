@@ -1,6 +1,6 @@
 #include "0125_valid_palindrome.h"
 
-TEST(S, Demo) {
+TEST(_125, Demo) {
     Solution s;
     EXPECT_EQ(s.isPalindrome("A man, a plan, a canal: Panama"),
               s._isPalindrome("A man, a plan, a canal: Panama"));

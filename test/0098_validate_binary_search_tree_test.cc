@@ -3,7 +3,7 @@
 
 using std::vector;
 
-TEST(S, is_valid_bst) {
+TEST(_98, is_valid_bst) {
     Solution s;
 
     EXPECT_EQ(s.isValidBST(
@@ -25,7 +25,7 @@ TEST(S, is_valid_bst) {
               true);
 }
 
-TEST(S, insert_bst) {
+TEST(_98, insert_bst) {
     Solution s;
     TreeNode* t = TreeNode::Factory(
             "[100,"

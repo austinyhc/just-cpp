@@ -2,7 +2,7 @@
 
 using std::vector;
 
-TEST(S, Demo) {
+TEST(_268, missing_number) {
     Solution s;
     EXPECT_EQ(s.missingNumber(vector<int>({3,0,1})), 2);
     EXPECT_EQ(s.missingNumber(vector<int>({0,1})), 2);

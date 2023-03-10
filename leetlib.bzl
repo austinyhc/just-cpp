@@ -20,6 +20,12 @@ def leetlib_deps():
         ],
     )
 
+
+def exists(path):
+    found = native.glob([path])
+    return len(found) > 0
+
+
 def leetlib_gen():
 
     tests = native.glob(["test/*_test.cc"])
@@ -28,11 +34,8 @@ def leetlib_gen():
         test_name = paths.basename(test).split("_test")[0]
         source_path = "src/" + test_name + ".h"
 
-    source_files = native.glob(["src/*.h"], ["src/0000_*"])
-    no_test_source_files = []
-    for source_file in source_files:
-        target_name = source_file[4:-2]
-        test_file = "test/" + target_name + "_test.cc"
+        if not exists(source_path):
+            fail("%s does not exist." % source_path)
 
         native.cc_library(
             name = test_name,

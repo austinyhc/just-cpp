@@ -2,24 +2,22 @@
 #include "utils/tree.h"
 
 using std::vector;
-using leetlib::TreeNodeFactory;
-using leetlib::DumpTree;
 
 TEST(S, is_valid_bst) {
     Solution s;
 
     EXPECT_EQ(s.isValidBST(
-        TreeNodeFactory<int>(
+        TreeNode::Factory(
             "[2,1,3]")),
               true);
 
     EXPECT_EQ(s.isValidBST(
-        TreeNodeFactory<int>(
+        TreeNode::Factory(
             "[5,1,4,null,null,3,6]")),
               false);
 
     EXPECT_EQ(s.isValidBST(
-        TreeNodeFactory<int>(
+        TreeNode::Factory(
             "[100,"
             "80,120,"
             "50,90,110,140,"
@@ -29,13 +27,13 @@ TEST(S, is_valid_bst) {
 
 TEST(S, insert_bst) {
     Solution s;
-    TreeNode* t = TreeNodeFactory<int>(
+    TreeNode* t = TreeNode::Factory(
             "[100,"
             "80,120,"
             "50,90,110,140,"
             "30,60,85,95,null,115,null,150]");
 
     EXPECT_EQ(
-            DumpTree(s.insertBST(t, 105)),
+            TreeNode::DumpTree(s.insertBST(t, 105)),
             vector<int>({100,80,120,50,90,110,140,30,60,85,95,105,115,150}));
 }

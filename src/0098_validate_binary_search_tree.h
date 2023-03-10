@@ -1,6 +1,7 @@
 #include "utils/base.h"
+#include "utils/tree.h"
 
-typedef base::TreeNode<int> TreeNode;
+typedef leetlib::TreeNode<int> TreeNode;
 
 class Solution {
 public:
@@ -9,7 +10,7 @@ public:
         TreeNode* prev = nullptr;
         return inorder_running_compare(root, prev);
     }
-    
+
 
     bool inorder_running_compare(TreeNode* root, TreeNode* prev) {
 

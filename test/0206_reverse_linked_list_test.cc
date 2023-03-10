@@ -2,7 +2,7 @@
 
 using std::vector;
 
-TEST(S, reverse_list) {
+TEST(_206, reverse_list) {
     Solution s;
     vector<int> test = {1,3,4,2,2};
     ListNode* list = ListNode::Factory(test);
@@ -11,7 +11,7 @@ TEST(S, reverse_list) {
     EXPECT_EQ(ListNode::Dump(s.reverseList(list)), test);
 }
 
-TEST(S, sum_of_naturl_number) {
+TEST(_206, sum_of_naturl_number) {
     Solution s;
     EXPECT_EQ(s.sum_of_natural_number(3),    (3+1)*3/2);
     EXPECT_EQ(s.sum_of_natural_number(100),  (100+1)*100/2);

@@ -1,5 +1,8 @@
 #include "utils/base.h"
 
+using std::vector;
+using std::unordered_map;
+
 class Solution {
 public:
     vector<int> twoSum(const vector<int>& nums, int target) {

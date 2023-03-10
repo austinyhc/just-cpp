@@ -1,6 +1,8 @@
-
 #include "utils/base.h"
-typedef base::TreeNode<int> TreeNode;
+#include "utils/tree.h"
+
+using std::vector;
+typedef leetlib::TreeNode<int> TreeNode;
 
 class Solution {
 public:

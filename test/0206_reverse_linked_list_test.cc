@@ -1,5 +1,7 @@
 #include "0206_reverse_linked_list.h"
 
+using std::vector;
+
 TEST(S, reverse_list) {
     Solution s;
     vector<int> test = {1,3,4,2,2};

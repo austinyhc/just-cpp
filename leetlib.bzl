@@ -24,6 +24,8 @@ def leetlib_deps():
         strip_include_prefix = "utils",
         hdrs = [
             "utils/base.h",
+            "utils/tree.h",
+            "utils/linked_list.h",
             "utils/nested_integer.h",
         ],
         deps = [

@@ -1,5 +1,7 @@
 #include "0001_two_sum.h"
 
+using std::vector;
+
 TEST(S, Demo) {
     Solution s;
     EXPECT_EQ(s.twoSum(vector<int>({2,7,11,15}), 9), vector<int>({0,1}));

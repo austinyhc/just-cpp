@@ -1,6 +1,7 @@
 #include "utils/base.h"
+#include "linked_list.h"
 
-typedef base::ListNode<int> ListNode;
+typedef leetlib::ListNode<int> ListNode;
 
 class Solution {
 public:
@@ -13,7 +14,7 @@ public:
         head->next = nullptr;
         return p;
     }
-    
+
     int sum_of_natural_number(int n) {
         if (n == 0) return 0;
         return n + sum_of_natural_number(n-1);

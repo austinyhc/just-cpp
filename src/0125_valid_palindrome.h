@@ -1,7 +1,6 @@
-#include <unistd.h>
-#include <cctype>
-#include <vector>
 #include "utils/base.h"
+
+using std::string;
 
 class Solution {
 public:
@@ -11,7 +10,7 @@ public:
         while (i < j) {
             while (i < j && !isalnum(s[i])) ++i;
             while (i < j && !isalnum(s[j])) --j;
-            
+
             if (tolower(s[i++]) != tolower(s[j--]))
                 return false;
         }
@@ -29,7 +28,7 @@ public:
 
         while (!isalnum(s[lo])) ++lo;
         while (!isalnum(s[hi])) --hi;
-        
+
         if (lo >= hi) { return true; }
 
         if (tolower(s[lo++]) == tolower(s[hi--])) {

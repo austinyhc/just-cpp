@@ -1,5 +1,7 @@
 #include "0268_missing_number.h"
 
+using std::vector;
+
 TEST(S, Demo) {
     Solution s;
     EXPECT_EQ(s.missingNumber(vector<int>({3,0,1})), 2);

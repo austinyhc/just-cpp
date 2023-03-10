@@ -1,6 +1,9 @@
 #include <unordered_map>
 #include "utils/base.h"
 
+using std::vector;
+using std::unordered_map;
+
 class Solution {
 public:
     int findDuplicate(const vector<int>& nums) {

@@ -1,5 +1,7 @@
 #include "utils/base.h"
 
+using std::vector;
+
 class Solution {
 public:
     int missingNumber(const vector<int>& nums) {

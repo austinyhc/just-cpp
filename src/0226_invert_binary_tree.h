@@ -1,6 +1,7 @@
 #include "utils/base.h"
+#include "utils/tree.h"
 
-typedef base::TreeNode<int> TreeNode;
+typedef leetlib::TreeNode<int> TreeNode;
 
 class Solution {
 public:

@@ -25,7 +25,6 @@ def exists(path):
     found = native.glob([path])
     return len(found) > 0
 
-
 def leetlib_gen():
 
     tests = native.glob(["test/*_test.cc"])
@@ -56,3 +55,29 @@ def leetlib_gen():
             ],
         )
 
+def leetlib_tools():
+
+    native.cc_library(
+        name = "nlohmann",
+        srcs = ["deps/nlohmann/json.hpp"],
+    )
+
+    native.cc_library(
+        name = "httplib",
+        srcs = ["deps/httplib/httplib.h"],
+    )
+
+    native.cc_library(
+        name = "cxxopts",
+        srcs = ["deps/cxxopts/cxxopts.hpp"],
+    )
+
+    native.cc_binary(
+        name = "leetlib",
+        srcs = ["tools/leetlib.cpp"],
+        deps = [
+            ":nlohmann",
+            ":httplib",
+            ":cxxopts"
+        ]
+    )

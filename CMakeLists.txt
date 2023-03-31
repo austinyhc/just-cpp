@@ -16,20 +16,31 @@ add_executable(leetcli
 
 target_include_directories(leetcli SYSTEM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/deps)
 
-
 enable_testing()
 
 find_package(GTest REQUIRED)
 
-add_executable(
-    leet_test
-    ${CMAKE_CURRENT_SOURCE_DIR}/test/0001_two_sum_test.cc)
+file(GLOB tests ${CMAKE_CURRENT_SOURCE_DIR}/test/*.cc)
 
-# add_subdirectory(GTest)
+add_subdirectory(deps/abseil-cpp)
 
-target_include_directories(leet_test SYSTEM PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils)
+foreach(test ${tests})
 
-target_link_libraries(leet_test GTest::gtest_main)
-add_test(NAME that-test-I-made COMMAND leet_test)
+    string(REGEX REPLACE "_test.cc" ".h" output ${test})
+    string(REGEX REPLACE "/test/" "/src/" output ${output})
+
+    get_filename_component(test_command ${test} NAME_WE)
+    get_filename_component(test_name ${output} NAME_WE)
+
+    add_executable(${test_command} ${test})
+
+    target_include_directories(${test_command} SYSTEM PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+    target_link_libraries(${test_command} absl::base absl::synchronization absl::strings)
+
+    target_link_libraries(${test_command} GTest::gtest_main)
+    add_test(NAME ${test_name} COMMAND ${test_command})
+endforeach()
+

@@ -1,5 +1,5 @@
-#include "utils/tree.h"
-#include "utils/base.h"
+#include "tree.h"
+#include "base.h"
 
 typedef leetlib::TreeNode<int> TreeNode;
 

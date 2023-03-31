@@ -1,4 +1,4 @@
-#include "utils/base.h"
+#include "base.h"
 #include "linked_list.h"
 
 typedef leetlib::ListNode<int> ListNode;

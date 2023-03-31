@@ -1,5 +1,5 @@
-#include "utils/base.h"
-#include "utils/tree.h"
+#include "base.h"
+#include "tree.h"
 
 using std::vector;
 typedef leetlib::TreeNode<int> TreeNode;

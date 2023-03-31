@@ -18,11 +18,10 @@ target_include_directories(leetcli SYSTEM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/de
 
 enable_testing()
 
-find_package(GTest REQUIRED)
-
 file(GLOB tests ${CMAKE_CURRENT_SOURCE_DIR}/test/*.cc)
 
 add_subdirectory(deps/abseil-cpp)
+add_subdirectory(deps/benchmark)
 
 foreach(test ${tests})
 
@@ -35,10 +34,15 @@ foreach(test ${tests})
     add_executable(${test_command} ${test})
 
     target_include_directories(${test_command} SYSTEM PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/deps
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-    target_link_libraries(${test_command} absl::base absl::synchronization absl::strings)
+    target_link_libraries(${test_command}
+        absl::base
+        absl::synchronization absl::strings
+        GTest::gtest_main
+        benchmark::benchmark)
 
     target_link_libraries(${test_command} GTest::gtest_main)
     add_test(NAME ${test_name} COMMAND ${test_command})

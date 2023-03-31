@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "benchmark/benchmark.h"
 #include "gtest/gtest.h"
 
 template<typename T>

@@ -12,7 +12,7 @@ BUILD_SYSTEM = Unix Makefiles
 all: build
 
 build: cmake
-	$(MAKE) -C $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) --no-print-directory
 
 cmake: $(BUILD_DIR)/Makefile
 

@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 project(${PROJECT_NAME})
 
 set(CMAKE_CXX_FLAGS "-g -Wall")
+set(BENCHMARK_DOWNLOAD_DEPENDENCIES ON)
 
 # set_target_property()
 

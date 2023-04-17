@@ -24,5 +24,8 @@ $(BUILD_DIR)/Makefile: CMakeLists.txt
 		-DCMAKE_BUILD_TYPE=$(BUILD_TYPE) \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS=1
 
+test: build
+	$(MAKE) -C $(BUILD_DIR)/test --no-print-directory test
+
 clean:
 	rm -rf $(BUILD_DIR)

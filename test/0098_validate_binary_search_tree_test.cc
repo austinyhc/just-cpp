@@ -1,5 +1,5 @@
 #include "0098_validate_binary_search_tree.h"
-#include "utils/tree.h"
+#include "tree.h"
 
 using std::vector;
 
